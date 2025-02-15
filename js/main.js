@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <input type="text" id="renameId-${tabCount}" placeholder="ID to rename">
                 <input type="text" id="renameName-${tabCount}" placeholder="New name">
                 <button id="renameButton-${tabCount}">Rename</button>
-                <label><input type="checkbox" id="toggleRename-${tabCount}"> Show renamed</label>
+                <label class="toggleRename hidden"><input type="checkbox" id="toggleRename-${tabCount}"> Show renamed</label>
             </div>
             <table class="file-content hidden" id="fileContent-${tabCount}">
                 <thead>

@@ -16,6 +16,12 @@ export function renameContent(tabContentId) {
 
   if (!renameId || !renameName) return;
 
+  const fileName = tabContent.dataset.fileName;
+  if (fileName !== "connection_trace.txt") {
+    console.error("Renaming is only allowed for connection_trace.txt");
+    return;
+  }
+
   const originalContent = JSON.parse(tabContent.dataset.originalContent);
   const renamedContent = originalContent.map((line) => {
     return {

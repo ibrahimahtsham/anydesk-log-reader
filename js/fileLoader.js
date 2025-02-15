@@ -76,6 +76,14 @@ export function loadFile(event, tabCount, tabContentId, timeAdjustment) {
           <label><input type="checkbox" id="filterQuestion-${tabCount}"> Show ?</label>
         `;
 
+        // Show the "Show renamed" checkbox if it exists
+        const toggleRenameElement = document.querySelector(
+          `#tab-content-${tabCount} .toggleRename`
+        );
+        if (toggleRenameElement) {
+          toggleRenameElement.classList.remove("hidden");
+        }
+
         // Add event listeners for checkboxes
         document
           .getElementById(`filterPasswd-${tabCount}`)
@@ -94,7 +102,7 @@ export function loadFile(event, tabCount, tabContentId, timeAdjustment) {
           });
       } else if (file.name === "ad_svc.trace" || file.name === "ad.trace") {
         fileOptions.classList.remove("hidden");
-        renameOptions.classList.remove("hidden");
+        renameOptions.classList.add("hidden"); // Hide rename options for ad_svc.trace and ad.trace
         fileContentTable.classList.remove("hidden");
 
         tableHeaders.innerHTML = `
@@ -115,7 +123,15 @@ export function loadFile(event, tabCount, tabContentId, timeAdjustment) {
           <label>Category: <input type="text" id="filterCategory-${tabCount}" placeholder="Enter category"></label>
         `;
 
-        // Add event listeners for checkboxes and category input
+        // Hide the "Show renamed" checkbox if it exists
+        const toggleRenameElement = document.querySelector(
+          `#tab-content-${tabCount} .toggleRename`
+        );
+        if (toggleRenameElement) {
+          toggleRenameElement.classList.add("hidden");
+        }
+
+        // Add event listeners for checkboxes
         document
           .getElementById(`filterWarning-${tabCount}`)
           .addEventListener("change", () => {

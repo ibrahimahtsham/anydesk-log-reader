@@ -8,7 +8,7 @@ export function filterContent(tabContentId) {
   const showRenamedElement = document.getElementById(
     `toggleRename-${tabIndex}`
   );
-  const showRenamed = showRenamedElement.checked;
+  const showRenamed = showRenamedElement ? showRenamedElement.checked : false;
 
   const contentToDisplay = showRenamed ? renamedContent : originalContent;
 
@@ -62,19 +62,31 @@ export function filterContent(tabContentId) {
   }
 
   fileContentDiv.innerHTML = filteredContent
-    .map(
-      (line) => `
+    .map((line) => {
+      if (fileName === "connection_trace.txt") {
+        return `
             <tr>
-                <td>${line.direction || line.level}</td>
-                <td>${line.date}</td>
-                <td>${line.time}</td>
-                <td>${line.service || ""}</td>
-                <td>${line.pid || ""}</td>
-                <td>${line.tid || ""}</td>
-                <td>${line.category}</td>
-                <td>${line.message || line.id}</td>
+              <td>${line.direction || ""}</td>
+              <td>${line.date}</td>
+              <td>${line.time}</td>
+              <td>${line.category}</td>
+              <td>${line.id}</td>
             </tr>
-        `
-    )
+          `;
+      } else if (fileName === "ad_svc.trace" || fileName === "ad.trace") {
+        return `
+            <tr>
+              <td>${line.level}</td>
+              <td>${line.date}</td>
+              <td>${line.time}</td>
+              <td>${line.service || ""}</td>
+              <td>${line.pid || ""}</td>
+              <td>${line.tid || ""}</td>
+              <td>${line.category}</td>
+              <td>${line.message || ""}</td>
+            </tr>
+          `;
+      }
+    })
     .join("");
 }
