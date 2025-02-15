@@ -24,18 +24,21 @@ export function filterContent(tabContentId) {
     const showQuestionElement = document.getElementById(
       `filterQuestion-${tabIndex}`
     );
+    const idFilterElement = document.getElementById(`idFilter-${tabIndex}`);
 
     const showPasswd = showPasswdElement ? showPasswdElement.checked : false;
     const showToken = showTokenElement ? showTokenElement.checked : false;
     const showQuestion = showQuestionElement
       ? showQuestionElement.checked
       : false;
+    const idFilter = idFilterElement ? idFilterElement.value : "";
 
     filteredContent = contentToDisplay.filter((line) => {
       if (showPasswd && line.category.includes("Passwd")) return true;
       if (showToken && line.category.includes("Token")) return true;
       if (showQuestion && line.category.includes("?")) return true;
-      return !showPasswd && !showToken && !showQuestion;
+      if (idFilter && line.id.includes(idFilter)) return true;
+      return !showPasswd && !showToken && !showQuestion && !idFilter;
     });
   } else if (fileName === "ad_svc.trace" || fileName === "ad.trace") {
     const showWarningElement = document.getElementById(

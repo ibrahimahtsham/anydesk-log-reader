@@ -51,15 +51,17 @@ export function loadFile(event, tabCount, tabContentId, timeAdjustment) {
       const uniqueClientIds = new Set();
       const uniqueIpAddresses = new Set();
       adjustedLines.forEach((line) => {
-        const clientIdMatch = line.message.match(/Client-ID: (\d+)/);
-        if (clientIdMatch) {
-          uniqueClientIds.add(clientIdMatch[1]);
-        }
-        const ipMatch = line.message.match(
-          /\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/
-        );
-        if (ipMatch) {
-          uniqueIpAddresses.add(ipMatch[0]);
+        if (line.message) {
+          const clientIdMatch = line.message.match(/Client-ID: (\d+)/);
+          if (clientIdMatch) {
+            uniqueClientIds.add(clientIdMatch[1]);
+          }
+          const ipMatch = line.message.match(
+            /\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/
+          );
+          if (ipMatch) {
+            uniqueIpAddresses.add(ipMatch[0]);
+          }
         }
       });
 
@@ -96,6 +98,7 @@ export function loadFile(event, tabCount, tabContentId, timeAdjustment) {
           <label><input type="checkbox" id="filterPasswd-${tabCount}"> Show Passwd</label>
           <label><input type="checkbox" id="filterToken-${tabCount}"> Show Token</label>
           <label><input type="checkbox" id="filterQuestion-${tabCount}"> Show ?</label>
+          <label>ID Filter: <input type="text" id="idFilter-${tabCount}" placeholder="Enter ID"></label>
         `;
 
         // Show the "Show renamed" checkbox if it exists
@@ -106,7 +109,7 @@ export function loadFile(event, tabCount, tabContentId, timeAdjustment) {
           toggleRenameElement.classList.remove("hidden");
         }
 
-        // Add event listeners for checkboxes
+        // Add event listeners for checkboxes and input fields
         document
           .getElementById(`filterPasswd-${tabCount}`)
           .addEventListener("change", () => {
@@ -120,6 +123,11 @@ export function loadFile(event, tabCount, tabContentId, timeAdjustment) {
         document
           .getElementById(`filterQuestion-${tabCount}`)
           .addEventListener("change", () => {
+            filterContent(tabContentId);
+          });
+        document
+          .getElementById(`idFilter-${tabCount}`)
+          .addEventListener("input", () => {
             filterContent(tabContentId);
           });
       } else if (file.name === "ad_svc.trace" || file.name === "ad.trace") {
@@ -158,7 +166,7 @@ export function loadFile(event, tabCount, tabContentId, timeAdjustment) {
           toggleRenameElement.classList.add("hidden");
         }
 
-        // Add event listeners for checkboxes
+        // Add event listeners for checkboxes and input fields
         document
           .getElementById(`filterWarning-${tabCount}`)
           .addEventListener("change", () => {
