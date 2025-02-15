@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Log Visualizer</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Log Visualizer</h1>
+        <button id="addTab">Add Tab</button>
+      </header>
+      <div class="tabs" id="tabsContainer">
+        <div class="tab active" id="tab-1">
+          <span contenteditable="true">Tab 1</span>
+          <button class="removeTab">x</button>
+        </div>
+      </div>
+      <div class="content" id="contentContainer">
+        <div class="tab-content active" id="tab-content-1">
+          <input type="file" id="fileInput-1" />
+          <div class="file-options" id="fileOptions-1"></div>
+          <div class="rename-options">
+            <input type="text" id="renameId-1" placeholder="ID to rename" />
+            <input type="text" id="renameName-1" placeholder="New name" />
+            <button id="renameButton-1">Rename</button>
+            <label
+              ><input type="checkbox" id="toggleRename-1" /> Show renamed</label
+            >
+          </div>
+          <table class="file-content" id="fileContent-1">
+            <thead>
+              <tr>
+                <th>Direction</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Category</th>
+                <th>ID</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>

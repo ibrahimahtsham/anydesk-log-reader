@@ -1,0 +1,75 @@
+body {
+  background-color: #121212;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.tabs {
+  display: flex;
+  border-bottom: 1px solid #444;
+}
+
+.tab {
+  padding: 10px;
+  cursor: pointer;
+  border: 1px solid #444;
+  border-bottom: none;
+  margin-right: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.tab.active {
+  background-color: #333;
+}
+
+.tab-content {
+  display: none;
+  padding: 20px;
+  border: 1px solid #444;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.tab-content input[type="file"] {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.file-options,
+.rename-options {
+  margin-top: 10px;
+}
+
+.file-options label,
+.rename-options label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.file-content {
+  margin-top: 10px;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.file-content th,
+.file-content td {
+  border: 1px solid #444;
+  padding: 8px;
+  text-align: left;
+}
