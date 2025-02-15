@@ -47,6 +47,28 @@ export function loadFile(event, tabCount, tabContentId, timeAdjustment) {
       tabContent.dataset.renamedContent = JSON.stringify(adjustedLines);
       tabContent.dataset.fileName = file.name;
 
+      // Extract unique Client IDs and IP addresses
+      const uniqueClientIds = new Set();
+      const uniqueIpAddresses = new Set();
+      adjustedLines.forEach((line) => {
+        const clientIdMatch = line.message.match(/Client-ID: (\d+)/);
+        if (clientIdMatch) {
+          uniqueClientIds.add(clientIdMatch[1]);
+        }
+        const ipMatch = line.message.match(
+          /\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/
+        );
+        if (ipMatch) {
+          uniqueIpAddresses.add(ipMatch[0]);
+        }
+      });
+
+      // Store the unique IDs and IPs in the tab content
+      tabContent.dataset.uniqueClientIds = JSON.stringify([...uniqueClientIds]);
+      tabContent.dataset.uniqueIpAddresses = JSON.stringify([
+        ...uniqueIpAddresses,
+      ]);
+
       // Display file options and table based on file name
       const fileOptions = document.getElementById(`fileOptions-${tabCount}`);
       const renameOptions = document.querySelector(
@@ -123,6 +145,7 @@ export function loadFile(event, tabCount, tabContentId, timeAdjustment) {
           <label><input type="checkbox" id="filterIp-${tabCount}"> Show IP Addresses</label>
           <label><input type="checkbox" id="filterClientId-${tabCount}"> Show Client IDs</label>
           <label>Category: <input type="text" id="filterCategory-${tabCount}" placeholder="Enter category"></label>
+          <button id="showUniqueData-${tabCount}">Show Unique Data</button>
         `;
 
         // Hide the "Show renamed" checkbox if it exists
@@ -164,8 +187,51 @@ export function loadFile(event, tabCount, tabContentId, timeAdjustment) {
           .addEventListener("input", () => {
             filterContent(tabContentId);
           });
+
+        // Add event listener for the "Show Unique Data" button
+        document
+          .getElementById(`showUniqueData-${tabCount}`)
+          .addEventListener("click", () => {
+            showUniqueDataModal(tabContentId);
+          });
       }
     };
     reader.readAsText(file);
   }
+}
+
+function showUniqueDataModal(tabContentId) {
+  const tabContent = document.getElementById(tabContentId);
+  const uniqueClientIds = JSON.parse(tabContent.dataset.uniqueClientIds);
+  const uniqueIpAddresses = JSON.parse(tabContent.dataset.uniqueIpAddresses);
+
+  const modalContent = document.querySelector(
+    "#uniqueDataModal .modal-content"
+  );
+  modalContent.innerHTML = `
+    <span class="close">&times;</span>
+    <h2>Unique Client IDs and IP Addresses</h2>
+    <h3>Client IDs</h3>
+    <ul>
+      ${uniqueClientIds.map((id) => `<li>${id}</li>`).join("")}
+    </ul>
+    <h3>IP Addresses</h3>
+    <ul>
+      ${uniqueIpAddresses.map((ip) => `<li>${ip}</li>`).join("")}
+    </ul>
+  `;
+
+  const modal = document.getElementById("uniqueDataModal");
+  modal.style.display = "block";
+
+  const closeModal = document.querySelector("#uniqueDataModal .close");
+  closeModal.onclick = function () {
+    modal.style.display = "none";
+  };
+
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  };
 }
