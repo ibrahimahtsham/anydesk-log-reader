@@ -2,12 +2,17 @@ import { filterContent } from "./filter.js";
 
 export function renameContent(tabContentId) {
   const tabContent = document.getElementById(tabContentId);
-  const renameId = document.getElementById(
-    `renameId-${tabContentId.split("-")[1]}`
-  ).value;
-  const renameName = document.getElementById(
-    `renameName-${tabContentId.split("-")[1]}`
-  ).value;
+  const tabIndex = tabContentId.split("-")[2];
+  const renameIdElement = document.getElementById(`renameId-${tabIndex}`);
+  const renameNameElement = document.getElementById(`renameName-${tabIndex}`);
+
+  if (!renameIdElement || !renameNameElement) {
+    console.error("Rename input elements not found");
+    return;
+  }
+
+  const renameId = renameIdElement.value;
+  const renameName = renameNameElement.value;
 
   if (!renameId || !renameName) return;
 

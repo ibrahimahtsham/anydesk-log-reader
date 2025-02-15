@@ -73,3 +73,7 @@ header {
   padding: 8px;
   text-align: left;
 }
+
+.hidden {
+  display: none;
+}

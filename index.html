@@ -21,8 +21,8 @@
       <div class="content" id="contentContainer">
         <div class="tab-content active" id="tab-content-1">
           <input type="file" id="fileInput-1" />
-          <div class="file-options" id="fileOptions-1"></div>
-          <div class="rename-options">
+          <div class="file-options hidden" id="fileOptions-1"></div>
+          <div class="rename-options hidden">
             <input type="text" id="renameId-1" placeholder="ID to rename" />
             <input type="text" id="renameName-1" placeholder="New name" />
             <button id="renameButton-1">Rename</button>
@@ -30,15 +30,9 @@
               ><input type="checkbox" id="toggleRename-1" /> Show renamed</label
             >
           </div>
-          <table class="file-content" id="fileContent-1">
+          <table class="file-content hidden" id="fileContent-1">
             <thead>
-              <tr>
-                <th>Direction</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Category</th>
-                <th>ID</th>
-              </tr>
+              <tr id="tableHeaders-1"></tr>
             </thead>
             <tbody></tbody>
           </table>

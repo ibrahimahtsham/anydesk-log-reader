@@ -29,22 +29,16 @@ document.addEventListener("DOMContentLoaded", () => {
     newTabContent.id = tabContentId;
     newTabContent.innerHTML = `
             <input type="file" id="fileInput-${tabCount}">
-            <div class="file-options" id="fileOptions-${tabCount}"></div>
-            <div class="rename-options">
+            <div class="file-options hidden" id="fileOptions-${tabCount}"></div>
+            <div class="rename-options hidden">
                 <input type="text" id="renameId-${tabCount}" placeholder="ID to rename">
                 <input type="text" id="renameName-${tabCount}" placeholder="New name">
                 <button id="renameButton-${tabCount}">Rename</button>
                 <label><input type="checkbox" id="toggleRename-${tabCount}"> Show renamed</label>
             </div>
-            <table class="file-content" id="fileContent-${tabCount}">
+            <table class="file-content hidden" id="fileContent-${tabCount}">
                 <thead>
-                    <tr>
-                        <th>Direction</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Category</th>
-                        <th>ID</th>
-                    </tr>
+                    <tr id="tableHeaders-${tabCount}"></tr>
                 </thead>
                 <tbody></tbody>
             </table>
