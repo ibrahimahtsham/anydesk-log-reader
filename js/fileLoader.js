@@ -145,6 +145,8 @@ export function loadFile(event, tabCount, tabContentId, timeAdjustment) {
           <label><input type="checkbox" id="filterIp-${tabCount}"> Show IP Addresses</label>
           <label><input type="checkbox" id="filterClientId-${tabCount}"> Show Client IDs</label>
           <label>Category: <input type="text" id="filterCategory-${tabCount}" placeholder="Enter category"></label>
+          <label>IP Filter: <input type="text" id="ipFilter-${tabCount}" placeholder="Enter IP address"></label>
+          <label>Client ID Filter: <input type="text" id="clientIdFilter-${tabCount}" placeholder="Enter Client ID"></label>
           <button id="showUniqueData-${tabCount}">Show Unique Data</button>
         `;
 
@@ -183,7 +185,12 @@ export function loadFile(event, tabCount, tabContentId, timeAdjustment) {
             filterContent(tabContentId);
           });
         document
-          .getElementById(`filterCategory-${tabCount}`)
+          .getElementById(`ipFilter-${tabCount}`)
+          .addEventListener("input", () => {
+            filterContent(tabContentId);
+          });
+        document
+          .getElementById(`clientIdFilter-${tabCount}`)
           .addEventListener("input", () => {
             filterContent(tabContentId);
           });

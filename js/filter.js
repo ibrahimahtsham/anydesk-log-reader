@@ -50,6 +50,10 @@ export function filterContent(tabContentId) {
     const showClientIdElement = document.getElementById(
       `filterClientId-${tabIndex}`
     );
+    const ipFilterElement = document.getElementById(`ipFilter-${tabIndex}`);
+    const clientIdFilterElement = document.getElementById(
+      `clientIdFilter-${tabIndex}`
+    );
 
     const showWarning = showWarningElement ? showWarningElement.checked : false;
     const showInfo = showInfoElement ? showInfoElement.checked : false;
@@ -59,6 +63,10 @@ export function filterContent(tabContentId) {
     const showClientId = showClientIdElement
       ? showClientIdElement.checked
       : false;
+    const ipFilter = ipFilterElement ? ipFilterElement.value : "";
+    const clientIdFilter = clientIdFilterElement
+      ? clientIdFilterElement.value
+      : "";
 
     filteredContent = contentToDisplay.filter((line) => {
       if (showWarning && line.level.includes("warning")) return true;
@@ -68,13 +76,17 @@ export function filterContent(tabContentId) {
       if (showIp && /\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/.test(line.message))
         return true;
       if (showClientId && /Client-ID: \d+/.test(line.message)) return true;
+      if (ipFilter && line.message.includes(ipFilter)) return true;
+      if (clientIdFilter && line.message.includes(clientIdFilter)) return true;
       return (
         !showWarning &&
         !showInfo &&
         !showError &&
         !showCategory &&
         !showIp &&
-        !showClientId
+        !showClientId &&
+        !ipFilter &&
+        !clientIdFilter
       );
     });
   }
