@@ -121,6 +121,7 @@ export function loadFile(event, tabCount, tabContentId, timeAdjustment) {
           <label><input type="checkbox" id="filterInfo-${tabCount}"> Show Info</label>
           <label><input type="checkbox" id="filterError-${tabCount}"> Show Errors</label>
           <label><input type="checkbox" id="filterIp-${tabCount}"> Show IP Addresses</label>
+          <label><input type="checkbox" id="filterClientId-${tabCount}"> Show Client IDs</label>
           <label>Category: <input type="text" id="filterCategory-${tabCount}" placeholder="Enter category"></label>
         `;
 
@@ -150,6 +151,11 @@ export function loadFile(event, tabCount, tabContentId, timeAdjustment) {
           });
         document
           .getElementById(`filterIp-${tabCount}`)
+          .addEventListener("change", () => {
+            filterContent(tabContentId);
+          });
+        document
+          .getElementById(`filterClientId-${tabCount}`)
           .addEventListener("change", () => {
             filterContent(tabContentId);
           });

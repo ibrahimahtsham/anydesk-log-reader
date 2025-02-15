@@ -47,12 +47,18 @@ export function filterContent(tabContentId) {
       `filterCategory-${tabIndex}`
     );
     const showIpElement = document.getElementById(`filterIp-${tabIndex}`);
+    const showClientIdElement = document.getElementById(
+      `filterClientId-${tabIndex}`
+    );
 
     const showWarning = showWarningElement ? showWarningElement.checked : false;
     const showInfo = showInfoElement ? showInfoElement.checked : false;
     const showError = showErrorElement ? showErrorElement.checked : false;
     const showCategory = showCategoryElement ? showCategoryElement.value : "";
     const showIp = showIpElement ? showIpElement.checked : false;
+    const showClientId = showClientIdElement
+      ? showClientIdElement.checked
+      : false;
 
     filteredContent = contentToDisplay.filter((line) => {
       if (showWarning && line.level.includes("warning")) return true;
@@ -61,8 +67,14 @@ export function filterContent(tabContentId) {
       if (showCategory && line.category.includes(showCategory)) return true;
       if (showIp && /\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/.test(line.message))
         return true;
+      if (showClientId && /Client-ID: \d+/.test(line.message)) return true;
       return (
-        !showWarning && !showInfo && !showError && !showCategory && !showIp
+        !showWarning &&
+        !showInfo &&
+        !showError &&
+        !showCategory &&
+        !showIp &&
+        !showClientId
       );
     });
   }
