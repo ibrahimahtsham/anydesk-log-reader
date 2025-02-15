@@ -1,12 +1,12 @@
-export function parseFile(fileName, lines) {
+export function parseFile(fileName, lines, timeAdjustment) {
   if (fileName === "connection_trace.txt") {
-    return parseConnectionTrace(lines);
+    return parseConnectionTrace(lines, timeAdjustment);
   } else if (fileName === "ad_svc.trace" || fileName === "ad.trace") {
-    return parseAdTrace(lines);
+    return parseAdTrace(lines, timeAdjustment);
   }
 }
 
-function parseConnectionTrace(lines) {
+function parseConnectionTrace(lines, timeAdjustment) {
   return lines.map((line) => {
     const parts = line.split(/\s+/);
     const dateTime = parts[1] + " " + parts[2];
@@ -14,14 +14,16 @@ function parseConnectionTrace(lines) {
     const id = parts[4]; // Use only the first part of the ID
 
     const date = new Date(dateTime);
-    date.setHours(date.getHours() + 5);
+    date.setHours(date.getHours() + timeAdjustment);
 
     const hours = date.getHours();
     const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
     const ampm = hours >= 12 ? "PM" : "AM";
     const adjustedHours = hours % 12 || 12;
     const adjustedMinutes = minutes < 10 ? "0" + minutes : minutes;
-    const adjustedTime = `${adjustedHours}:${adjustedMinutes} ${ampm}`;
+    const adjustedSeconds = seconds < 10 ? "0" + seconds : seconds;
+    const adjustedTime = `${adjustedHours}:${adjustedMinutes}:${adjustedSeconds} ${ampm}`;
 
     return {
       direction: parts[0],
@@ -33,7 +35,7 @@ function parseConnectionTrace(lines) {
   });
 }
 
-function parseAdTrace(lines) {
+function parseAdTrace(lines, timeAdjustment) {
   return lines
     .map((line) => {
       const parts = line.match(
@@ -43,14 +45,16 @@ function parseAdTrace(lines) {
 
       const dateTime = parts[2] + " " + parts[3];
       const date = new Date(dateTime);
-      date.setHours(date.getHours() + 5);
+      date.setHours(date.getHours() + timeAdjustment);
 
       const hours = date.getHours();
       const minutes = date.getMinutes();
+      const seconds = date.getSeconds();
       const ampm = hours >= 12 ? "PM" : "AM";
       const adjustedHours = hours % 12 || 12;
       const adjustedMinutes = minutes < 10 ? "0" + minutes : minutes;
-      const adjustedTime = `${adjustedHours}:${adjustedMinutes}:${date.getSeconds()}.${date.getMilliseconds()} ${ampm}`;
+      const adjustedSeconds = seconds < 10 ? "0" + seconds : seconds;
+      const adjustedTime = `${adjustedHours}:${adjustedMinutes}:${adjustedSeconds} ${ampm}`;
 
       return {
         level: parts[1],

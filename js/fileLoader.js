@@ -1,7 +1,7 @@
 import { parseFile } from "./fileParser.js";
 import { filterContent } from "./filter.js";
 
-export function loadFile(event, tabCount, tabContentId) {
+export function loadFile(event, tabCount, tabContentId, timeAdjustment) {
   const file = event.target.files[0];
   if (file) {
     const reader = new FileReader();
@@ -9,7 +9,7 @@ export function loadFile(event, tabCount, tabContentId) {
       const fileContent = e.target.result;
       const lines = fileContent.split("\n");
 
-      const adjustedLines = parseFile(file.name, lines);
+      const adjustedLines = parseFile(file.name, lines, timeAdjustment);
 
       const tbody = document.querySelector(`#fileContent-${tabCount} tbody`);
       tbody.innerHTML = adjustedLines
@@ -111,9 +111,11 @@ export function loadFile(event, tabCount, tabContentId) {
         fileOptions.innerHTML = `
           <label><input type="checkbox" id="filterWarning-${tabCount}"> Show Warnings</label>
           <label><input type="checkbox" id="filterInfo-${tabCount}"> Show Info</label>
+          <label><input type="checkbox" id="filterError-${tabCount}"> Show Errors</label>
+          <label>Category: <input type="text" id="filterCategory-${tabCount}" placeholder="Enter category"></label>
         `;
 
-        // Add event listeners for checkboxes
+        // Add event listeners for checkboxes and category input
         document
           .getElementById(`filterWarning-${tabCount}`)
           .addEventListener("change", () => {
@@ -122,6 +124,16 @@ export function loadFile(event, tabCount, tabContentId) {
         document
           .getElementById(`filterInfo-${tabCount}`)
           .addEventListener("change", () => {
+            filterContent(tabContentId);
+          });
+        document
+          .getElementById(`filterError-${tabCount}`)
+          .addEventListener("change", () => {
+            filterContent(tabContentId);
+          });
+        document
+          .getElementById(`filterCategory-${tabCount}`)
+          .addEventListener("input", () => {
             filterContent(tabContentId);
           });
       }

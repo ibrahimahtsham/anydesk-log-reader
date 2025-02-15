@@ -39,6 +39,34 @@
         </div>
       </div>
     </div>
+
+    <!-- Time Adjustment Modal -->
+    <div id="timeAdjustmentModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Adjust Time</h2>
+        <label for="timeAdjustment">Select Time Adjustment:</label>
+        <select id="timeAdjustment">
+          <option value="0">UTC</option>
+          <option value="1">UTC+1 (CET - Central European Time)</option>
+          <option value="2">UTC+2 (EET - Eastern European Time)</option>
+          <option value="3">UTC+3 (MSK - Moscow Time)</option>
+          <option value="4">UTC+4 (GST - Gulf Standard Time)</option>
+          <option value="5">UTC+5 (PKT - Pakistan Standard Time)</option>
+          <option value="6">UTC+6 (BST - Bangladesh Standard Time)</option>
+          <option value="7">UTC+7 (ICT - Indochina Time)</option>
+          <option value="8">UTC+8 (CST - China Standard Time)</option>
+          <option value="9">UTC+9 (JST - Japan Standard Time)</option>
+          <option value="10">
+            UTC+10 (AEST - Australian Eastern Standard Time)
+          </option>
+          <option value="11">UTC+11 (SBT - Solomon Islands Time)</option>
+          <option value="12">UTC+12 (NZST - New Zealand Standard Time)</option>
+        </select>
+        <button id="applyTimeAdjustment">Apply</button>
+      </div>
+    </div>
+
     <script type="module" src="js/main.js"></script>
   </body>
 </html>

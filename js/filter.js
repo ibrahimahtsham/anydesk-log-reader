@@ -42,14 +42,22 @@ export function filterContent(tabContentId) {
       `filterWarning-${tabIndex}`
     );
     const showInfoElement = document.getElementById(`filterInfo-${tabIndex}`);
+    const showErrorElement = document.getElementById(`filterError-${tabIndex}`);
+    const showCategoryElement = document.getElementById(
+      `filterCategory-${tabIndex}`
+    );
 
     const showWarning = showWarningElement ? showWarningElement.checked : false;
     const showInfo = showInfoElement ? showInfoElement.checked : false;
+    const showError = showErrorElement ? showErrorElement.checked : false;
+    const showCategory = showCategoryElement ? showCategoryElement.value : "";
 
     filteredContent = contentToDisplay.filter((line) => {
       if (showWarning && line.level.includes("warning")) return true;
       if (showInfo && line.level.includes("info")) return true;
-      return !showWarning && !showInfo;
+      if (showError && line.level.includes("error")) return true;
+      if (showCategory && line.category.includes(showCategory)) return true;
+      return !showWarning && !showInfo && !showError && !showCategory;
     });
   }
 

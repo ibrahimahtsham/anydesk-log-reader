@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document
       .getElementById(`fileInput-${tabCount}`)
       .addEventListener("change", (event) => {
-        loadFile(event, tabCount, tabContentId);
+        showTimeAdjustmentModal(event, tabCount, tabContentId);
       });
 
     // Add event listener for rename button
@@ -100,6 +100,32 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     document.getElementById(tabId).classList.add("active");
     document.getElementById(tabContentId).classList.add("active");
+  }
+
+  function showTimeAdjustmentModal(event, tabCount, tabContentId) {
+    const modal = document.getElementById("timeAdjustmentModal");
+    const closeModal = document.querySelector(".close");
+    const applyButton = document.getElementById("applyTimeAdjustment");
+
+    modal.style.display = "block";
+
+    closeModal.onclick = function () {
+      modal.style.display = "none";
+    };
+
+    window.onclick = function (event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    };
+
+    applyButton.onclick = function () {
+      const timeAdjustment = parseInt(
+        document.getElementById("timeAdjustment").value
+      );
+      loadFile(event, tabCount, tabContentId, timeAdjustment);
+      modal.style.display = "none";
+    };
   }
 
   // Initialize one tab on startup
