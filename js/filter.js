@@ -46,18 +46,24 @@ export function filterContent(tabContentId) {
     const showCategoryElement = document.getElementById(
       `filterCategory-${tabIndex}`
     );
+    const showIpElement = document.getElementById(`filterIp-${tabIndex}`);
 
     const showWarning = showWarningElement ? showWarningElement.checked : false;
     const showInfo = showInfoElement ? showInfoElement.checked : false;
     const showError = showErrorElement ? showErrorElement.checked : false;
     const showCategory = showCategoryElement ? showCategoryElement.value : "";
+    const showIp = showIpElement ? showIpElement.checked : false;
 
     filteredContent = contentToDisplay.filter((line) => {
       if (showWarning && line.level.includes("warning")) return true;
       if (showInfo && line.level.includes("info")) return true;
       if (showError && line.level.includes("error")) return true;
       if (showCategory && line.category.includes(showCategory)) return true;
-      return !showWarning && !showInfo && !showError && !showCategory;
+      if (showIp && /\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/.test(line.message))
+        return true;
+      return (
+        !showWarning && !showInfo && !showError && !showCategory && !showIp
+      );
     });
   }
 
